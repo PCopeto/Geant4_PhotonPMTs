@@ -20,6 +20,12 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtuple("Hits", "Hits");
     man->CreateNtupleIColumn("HitsRightPMT");
     man->CreateNtupleIColumn("HitsLeftPMT");
+    man->CreateNtupleIColumn("DifferenceRightLeft");
+    man->CreateNtupleDColumn("EnergyDepositedRightPMT");
+    man->CreateNtupleDColumn("EnergyDepositedLeftPMT");
+    man->CreateNtupleDColumn("DifferenceEnergyDepositedRightLeft");
+
+
 
     
     man->FinishNtuple(0);

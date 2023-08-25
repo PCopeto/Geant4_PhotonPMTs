@@ -18,6 +18,11 @@ public:
 
     void ResetHits() { hits1 = 0; hits2 = 0; }
 
+    G4double getEnergy1() const {return totalEnergyPMT1;}
+    G4double getEnergy2() const {return totalEnergyPMT2;}
+    
+    void ResetEnergy() { totalEnergyPMT1 = 0.0; totalEnergyPMT2 = 0.0; }
+
 
 private:
     // Private attribute
@@ -28,6 +33,11 @@ private:
 
     G4int hits1;
     G4int hits2;
+
+    G4double totalEnergyPMT1;
+    G4double totalEnergyPMT2;
+    G4double energy1;
+    G4double energy2;
 };
 
 #endif

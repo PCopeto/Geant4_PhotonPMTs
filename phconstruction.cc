@@ -15,6 +15,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     G4double rindexScintillator[3] = {1.58, 1.58, 1.58};
     G4double rindexWorld[3] = {1.0, 1.0, 1.0};
     G4double atnl[3] = {380.*cm, 380.*cm, 380.*cm};
+    G4double rindexLead[3] = {1.7, 1.7, 1.7};
 
 //Definir Mundo
 
@@ -43,7 +44,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     mptScintillator->AddProperty("SCINTILLATIONCOMPONENT1", energy, scint, 3);
     mptScintillator->AddProperty("RINDEX", energy, rindexScintillator, 3);
     mptScintillator->AddProperty("ABSLENGTH", energy, atnl, 3);
-    mptScintillator->AddConstProperty("SCINTILLATIONYIELD", 100. / MeV);
+    mptScintillator->AddConstProperty("SCINTILLATIONYIELD", 10000. / MeV);
     mptScintillator->AddConstProperty("RESOLUTIONSCALE", 1.0);
     mptScintillator->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 2.1 * ns);
     mptScintillator->AddConstProperty("SCINTILLATIONRISETIME1", 0.9 * ns);
@@ -54,28 +55,43 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 //Definir Cintilador
 
-    G4Box *solidScintillator1 = new G4Box("solidScintillator1", 0.1265*m, 0.05*m, 0.0026*m);
+    //G4Box *solidScintillator1 = new G4Box("solidScintillator1", 0.1265*m, 0.05*m, 0.0026*m); //cintilador pequeno
+    G4Box *solidScintillator1 = new G4Box("solidScintillator1", 0.158*m, 0.126*m, 0.025*m); //cintilador grande
 
     G4LogicalVolume* logicScintillator1 = new G4LogicalVolume(solidScintillator1, scintillator, "logicScintillator1");
 
     G4VPhysicalVolume *physScintillator1 = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicScintillator1, "physScintillator1", logicWorld, false, 0, true);
 
 
+    G4Material *pmtMat = nist->FindOrBuildMaterial("G4_Pb");
+
+    G4MaterialPropertiesTable *mptPMT = new G4MaterialPropertiesTable();
+    mptPMT->AddProperty("RINDEX", energy, rindexLead, 3);
+
+    pmtMat->SetMaterialPropertiesTable(mptPMT);
+
+
+
 //Definir PMT Direito
 
-    G4Box* solidPMT1 = new G4Box("solidPMT1", 0.001*m, 0.025*m, 0.0026*m);
+    //G4Box* solidPMT1 = new G4Box("solidPMT1", 0.001*m, 0.025*m, 0.0026*m); //cintilador pequeno
+    G4Box* solidPMT1 = new G4Box("solidPMT1", 0.001*m, 0.025*m, 0.025*m); //cintilador grande
 
-    logicPMT1 = new G4LogicalVolume(solidPMT1, worldMat, "logicPMT1");
+    logicPMT1 = new G4LogicalVolume(solidPMT1, pmtMat, "logicPMT1");
 
-    G4VPhysicalVolume* physPMT1 = new G4PVPlacement(0, G4ThreeVector(0.1275*m, 0., 0.), logicPMT1, "physPMT1", logicWorld, false, 0, true);
+    //G4VPhysicalVolume* physPMT1 = new G4PVPlacement(0, G4ThreeVector(0.1275*m, 0., 0.), logicPMT1, "physPMT1", logicWorld, false, 0, true); //cintilador pequeno
+    G4VPhysicalVolume* physPMT1 = new G4PVPlacement(0, G4ThreeVector(0.1585*m, 0., 0.), logicPMT1, "physPMT1", logicWorld, false, 0, true); //cintilador grande
+
 
 //Definir PMT Esquerdo
 
-    G4Box* solidPMT2 = new G4Box("solidPMT2", 0.001*m, 0.025*m, 0.0026*m);
+    //G4Box* solidPMT2 = new G4Box("solidPMT2", 0.001*m, 0.025*m, 0.0026*m); //cintilador pequeno
+    G4Box* solidPMT2 = new G4Box("solidPMT2", 0.001*m, 0.025*m, 0.025*m); //cintilador grande
 
-    logicPMT2 = new G4LogicalVolume(solidPMT2, worldMat, "logicPMT2");
+    logicPMT2 = new G4LogicalVolume(solidPMT2, pmtMat, "logicPMT2");
 
-    G4VPhysicalVolume* physPMT2 = new G4PVPlacement(0, G4ThreeVector(-0.1275*m, 0., 0.), logicPMT2, "physPMT2", logicWorld, false, 0, true);
+    //G4VPhysicalVolume* physPMT2 = new G4PVPlacement(0, G4ThreeVector(-0.1275*m, 0., 0.), logicPMT2, "physPMT2", logicWorld, false, 0, true); //cintilador pequeno
+    G4VPhysicalVolume* physPMT2 = new G4PVPlacement(0, G4ThreeVector(-0.1585*m, 0., 0.), logicPMT2, "physPMT2", logicWorld, false, 0, true); //cintilador grande
 
 
 

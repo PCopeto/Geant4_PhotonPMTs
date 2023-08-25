@@ -16,9 +16,20 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
     G4String particleName="muon";
     G4ParticleDefinition *particle = particleTable->FindParticle("mu-");
 
-    //G4ThreeVector pos(-0.06325*m, 0., 0.5*m); //beam left side
-    G4ThreeVector pos(0., 0., 0.5*m); //beam center
-    //G4ThreeVector pos(0.06325*m, 0., 0.5*m); //beam right side
+
+//Cintilador pequeno
+
+    //G4ThreeVector pos(-0.079*m, 0., 0.5*m); //beam left side
+    //G4ThreeVector pos(0., 0., 0.5*m); //beam center
+    //G4ThreeVector pos(0.079*m, 0., 0.5*m); //beam right side
+
+//Cintilador grande
+    //G4ThreeVector pos(-0.079*m, 0., 0.5*m); //beam left side
+    //G4ThreeVector pos(0., 0., 0.5*m); //beam center
+    G4ThreeVector pos(0.079*m, 0., 0.5*m); //beam right side
+
+
+
     G4ThreeVector mom(0., 0., -1.);
 
     fParticleGun->SetParticlePosition(pos);
